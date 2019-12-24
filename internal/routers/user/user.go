@@ -292,6 +292,19 @@ func IsAdmin(ctx *macaron.Context) bool {
 		return false
 	}
 	if v, ok := isAdmin.(int); ok {
+		return v == 1
+	} else {
+		return false
+	}
+}
+
+// IsDeveloper 判断当前用户是否是开发者
+func IsDeveloper(ctx *macaron.Context) bool {
+	isAdmin, ok := ctx.Data["is_admin"]
+	if !ok {
+		return false
+	}
+	if v, ok := isAdmin.(int); ok {
 		return v > 0
 	} else {
 		return false

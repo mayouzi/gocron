@@ -41,7 +41,7 @@ class User {
 
   getIsAdmin () {
     let isAdmin = localStorage.getItem('is_admin')
-    return isAdmin === '1'
+    return isAdmin
   }
 
   setIsAdmin (isAdmin) {

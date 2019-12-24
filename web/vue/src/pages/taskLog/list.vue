@@ -34,7 +34,7 @@
       </el-form>
       <el-row type="flex" justify="end">
         <el-col :span="3">
-          <el-button type="danger" v-if="this.$store.getters.user.isAdmin" @click="clearLog">清空日志</el-button>
+          <el-button type="danger" v-if="isAdmin" @click="clearLog">清空日志</el-button>
         </el-col>
         <el-col :span="2">
           <el-button type="info" @click="refresh">刷新</el-button>
@@ -111,7 +111,7 @@
         </el-table-column>
         <el-table-column
           label="执行结果"
-          width="120" v-if="this.isAdmin">
+          width="120" v-if="isDeveloper">
           <template slot-scope="scope">
             <el-button type="success"
                        v-if="scope.row.status === 2"
@@ -167,7 +167,6 @@ export default {
         protocol: '',
         status: ''
       },
-      isAdmin: this.$store.getters.user.isAdmin,
       dialogVisible: false,
       currentTaskResult: {
         command: '',
@@ -200,11 +199,19 @@ export default {
           value: '4',
           label: '取消'
         }
-      ]
+      ],
+      isDeveloper: false,
+      isAdmin: false
     }
   },
   components: {taskSidebar},
   created () {
+    if (localStorage.is_admin === '1' || localStorage.is_admin === '2') {
+      this.isDeveloper = true
+      if (localStorage.is_admin === '1') {
+        this.isAdmin = true
+      }
+    }
     if (this.$route.query.task_id) {
       this.searchParams.task_id = this.$route.query.task_id
     }

@@ -55,7 +55,7 @@
     </el-form>
     <el-row type="flex" justify="end">
       <el-col :span="2">
-        <el-button type="primary" @click="toEdit(null)" v-if="this.$store.getters.user.isAdmin">新增</el-button>
+        <el-button type="primary" @click="toEdit(null)" v-if="isDeveloper">新增</el-button>
       </el-col>
       <el-col :span="2">
         <el-button type="info" @click="refresh">刷新</el-button>
@@ -140,7 +140,7 @@
         label="执行方式">
       </el-table-column>
       <el-table-column
-        label="状态" v-if="this.isAdmin">
+        label="状态" v-if="isDeveloper">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.level === 1"
@@ -166,7 +166,7 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="220" v-if="this.isAdmin">
+      <el-table-column label="操作" width="220" v-if="isDeveloper">
         <template slot-scope="scope">
           <el-row>
             <el-button type="primary" @click="toEdit(scope.row)">编辑</el-button>
@@ -205,7 +205,6 @@ export default {
         host_id: '',
         status: ''
       },
-      isAdmin: this.$store.getters.user.isAdmin,
       protocolList: [
         {
           value: '1',
@@ -225,11 +224,15 @@ export default {
           value: '1',
           label: '停止'
         }
-      ]
+      ],
+      isDeveloper: false
     }
   },
   components: {taskSidebar},
   created () {
+    if (localStorage.is_admin === '2' || localStorage.is_admin === '1') {
+      this.isDeveloper = true
+    }
     const hostId = this.$route.query.host_id
     if (hostId) {
       this.searchParams.host_id = hostId

@@ -264,6 +264,20 @@ func urlAuth(ctx *macaron.Context) {
 		}
 	}
 
+	if user.IsDeveloper(ctx) {
+		developerAllowPrefix := []string{
+			"/task/",
+			"/system/mail",
+			"/system/slack",
+			"/host/ping/",
+		}
+		for _, prefix := range developerAllowPrefix {
+			if strings.HasPrefix(uri, prefix) {
+				return
+			}
+		}
+	}
+
 	jsonResp := utils.JsonResponse{}
 
 	data := jsonResp.Failure(utils.UnauthorizedError, "您无权限访问")

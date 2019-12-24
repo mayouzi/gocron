@@ -35,4 +35,9 @@ export default new vuex.Store({
       state.user = userStorage.get()
     }
   }
+  // actions: {
+  //   setUser ({commit, state}, user) {
+  //     commit('setUser', user)
+  //   }
+  // }
 })

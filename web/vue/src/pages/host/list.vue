@@ -6,7 +6,7 @@
           <el-form-item label="节点ID">
             <el-input v-model.trim="searchParams.id"></el-input>
           </el-form-item>
-          <el-form-item label="主机名">
+          <el-form-item label="节点IP">
             <el-input v-model.trim="searchParams.name"></el-input>
           </el-form-item>
           <el-form-item>
@@ -16,7 +16,7 @@
       </el-form>
       <el-row type="flex" justify="end">
         <el-col :span="2">
-          <el-button type="primary" v-if="this.$store.getters.user.isAdmin"  @click="toEdit(null)">新增</el-button>
+          <el-button type="primary" v-if="isAdmin"  @click="toEdit(null)">新增</el-button>
         </el-col>
         <el-col :span="2">
           <el-button type="info" @click="refresh">刷新</el-button>
@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="主机名">
+          label="节点IP">
         </el-table-column>
         <el-table-column
           prop="port"
@@ -62,12 +62,12 @@
           prop="remark"
           label="备注">
         </el-table-column>
-        <el-table-column label="操作" width="300" v-if="this.isAdmin">
+        <el-table-column label="操作" width="300" v-if="isDeveloper">
           <template slot-scope="scope">
             <el-row>
-              <el-button type="primary" @click="toEdit(scope.row)">编辑</el-button>
+              <el-button type="primary" v-if="isAdmin" @click="toEdit(scope.row)">编辑</el-button>
               <el-button type="info" @click="ping(scope.row)">测试连接</el-button>
-              <el-button type="danger" @click="remove(scope.row)">删除</el-button>
+              <el-button type="danger" v-if="isAdmin" @click="remove(scope.row)">删除</el-button>
             </el-row>
             <br>
           </template>
@@ -92,10 +92,17 @@ export default {
         name: '',
         alias: ''
       },
-      isAdmin: this.$store.getters.user.isAdmin
+      isAdmin: false,
+      isDeveloper: false
     }
   },
   created () {
+    if (localStorage.is_admin === '1' || localStorage.is_admin === '2') {
+      this.isDeveloper = true
+      if (localStorage.is_admin === '1') {
+        this.isAdmin = true
+      }
+    }
     this.search()
   },
   methods: {

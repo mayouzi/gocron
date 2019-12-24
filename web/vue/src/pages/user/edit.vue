@@ -21,7 +21,8 @@
         </template>
         <el-form-item label="角色" prop="is_admin">
           <el-radio-group v-model="form.is_admin">
-            <el-radio :label="0">普通用户</el-radio>
+            <el-radio :label="0">游客</el-radio>
+            <el-radio :label="2">开发者</el-radio>
             <el-radio :label="1">管理员</el-radio>
           </el-radio-group>
         </el-form-item>
