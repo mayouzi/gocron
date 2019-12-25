@@ -3,7 +3,7 @@ package task
 import (
 	"strconv"
 	"strings"
-
+	gjson "encoding/json"
 	"github.com/ouqiang/goutil"
 
 	"github.com/go-macaron/binding"
@@ -198,6 +198,10 @@ func Store(ctx *macaron.Context, form TaskForm) string {
 		addTaskToTimer(id)
 	}
 
+	out, _ := gjson.Marshal(form)
+	
+	logger.Infof("user: %s store task: %d, form: %s", ctx.Data["username"], id, string(out))
+
 	return json.Success("保存成功", nil)
 }
 
@@ -215,6 +219,8 @@ func Remove(ctx *macaron.Context) string {
 	taskHostModel.Remove(id)
 
 	service.ServiceTask.Remove(id)
+
+	logger.Infof("user: %s remove task: %d ", ctx.Data["username"], id)
 
 	return json.Success(utils.SuccessContent, nil)
 }
@@ -242,6 +248,8 @@ func Run(ctx *macaron.Context) string {
 	task.Spec = "手动运行"
 	service.ServiceTask.Run(task)
 
+	logger.Infof("user: %s run task: %d", ctx.Data["username"], id)
+
 	return json.Success("任务已开始运行, 请到任务日志中查看结果", nil)
 }
 
@@ -262,6 +270,8 @@ func changeStatus(ctx *macaron.Context, status models.Status) string {
 	} else {
 		service.ServiceTask.Remove(id)
 	}
+
+	logger.Infof("user: %s change task: %d status: %d", ctx.Data["username"], id, status)
 
 	return json.Success(utils.SuccessContent, nil)
 }
