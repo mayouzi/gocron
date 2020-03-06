@@ -34,7 +34,7 @@ type TaskForm struct {
 	Tag              string
 	Remark           string
 	NotifyStatus     int8 `binding:"In(1,2,3,4)"`
-	NotifyType       int8 `binding:"In(1,2,3,4)"`
+	NotifyType       int8 `binding:"In(1,2,3,4,5)"`
 	NotifyReceiverId string
 	NotifyKeyword    string
 }

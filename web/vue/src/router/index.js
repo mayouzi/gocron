@@ -16,6 +16,7 @@ import UserLogin from '../pages/user/login'
 import UserEditPassword from '../pages/user/editPassword'
 import UserEditMyPassword from '../pages/user/editMyPassword'
 
+import NotificationDing from '../pages/system/notification/ding'
 import NotificationEmail from '../pages/system/notification/email'
 import NotificationSlack from '../pages/system/notification/slack'
 import NotificationWebhook from '../pages/system/notification/webhook'
@@ -142,7 +143,13 @@ const router = new Router({
     },
     {
       path: '/system',
-      redirect: '/system/notification/email',
+      redirect: '/system/notification/ding',
+      meta: {}
+    },
+    {
+      path: '/system/notification/ding',
+      name: 'system-notification-ding',
+      component: NotificationDing,
       meta: {}
     },
     {

@@ -164,6 +164,7 @@ func (task Task) Add(taskModel models.Task) {
 	err := goutil.PanicToError(func() {
 		serviceCron.AddFunc(taskModel.Spec, taskFunc, cronName)
 	})
+
 	if err != nil {
 		logger.Error("添加任务到调度器失败#", err)
 	}
@@ -341,6 +342,7 @@ func createJob(taskModel models.Task) cron.FuncJob {
 		logger.Infof("开始执行任务#%s#命令-%s", taskModel.Name, taskModel.Command)
 		taskResult := execJob(handler, taskModel, taskLogId)
 		logger.Infof("任务完成#%s#命令-%s", taskModel.Name, taskModel.Command)
+
 		afterExecJob(taskModel, taskResult, taskLogId)
 	}
 

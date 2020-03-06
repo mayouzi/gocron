@@ -106,6 +106,12 @@ func Register(m *macaron.Macaron) {
 
 	// 管理
 	m.Group("/system", func() {
+		m.Group("/ding", func() {
+			m.Get("", manage.Ding)
+			m.Post("/update", manage.UpdateDing)
+			m.Post("/user", manage.CreateDingUser)
+			m.Post("/user/remove/:id", manage.RemoveDingUser)
+		})
 		m.Group("/slack", func() {
 			m.Get("", manage.Slack)
 			m.Post("/update", manage.UpdateSlack)
@@ -267,6 +273,7 @@ func urlAuth(ctx *macaron.Context) {
 	if user.IsDeveloper(ctx) {
 		developerAllowPrefix := []string{
 			"/task/",
+			"/system/ding",
 			"/system/mail",
 			"/system/slack",
 			"/host/ping/",

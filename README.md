@@ -92,7 +92,7 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 `make run` 编译并运行
 
 `make package` 打包 
-> 生成当前系统的压缩包 gocron-v1.5-darwin-amd64.tar.gz gocron-node-v1.5-darwin-amd64.tar.gz
+> 生成当前系统的压缩包 gocron-v1.6-darwin-amd64.tar.gz gocron-node-v1.6-darwin-amd64.tar.gz
 
 `make package-all` 生成Windows、Linux、Mac的压缩包
 
@@ -136,6 +136,11 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 提交[issue](https://github.com/ouqiang/gocron/issues/new)
 
 ## ChangeLog
+
+v1.6
+--------
+* 支持钉钉消息通知并制定AT的用户
+* 角色重构为游客、开发者、管理员，游客只有查看权限，开发者只有节点查看和任务管理权限
 
 v1.5
 --------

@@ -32,7 +32,7 @@
             <el-option
               v-for="item in hosts"
               :key="item.id"
-              :label="item.alias + ' - ' + item.name + ':' + item.port "
+              :label="item.alias"
               :value="item.id">
             </el-option>
           </el-select>
@@ -99,7 +99,7 @@
             </el-form-item> <br>
             <el-form-item label="任务节点">
               <div v-for="item in scope.row.hosts" :key="item.host_id">
-                {{item.alias}} - {{item.name}}:{{item.port}} <br>
+                {{item.alias}}<br>
               </div>
             </el-form-item> <br>
             <el-form-item label="命令:" style="width: 100%">
