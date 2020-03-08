@@ -290,7 +290,7 @@ export default {
         timeout: 0,
         multi: 2,
         notify_status: 1,
-        notify_type: 2,
+        notify_type: 5,
         notify_receiver_id: '',
         notify_keyword: '',
         retry_times: 0,
