@@ -8,9 +8,9 @@ import (
 
 	"google.golang.org/grpc/status"
 
-	"github.com/ouqiang/gocron/internal/modules/logger"
-	"github.com/ouqiang/gocron/internal/modules/rpc/grpcpool"
-	pb "github.com/ouqiang/gocron/internal/modules/rpc/proto"
+	"github.com/mayouzi/gocron/internal/modules/logger"
+	"github.com/mayouzi/gocron/internal/modules/rpc/grpcpool"
+	pb "github.com/mayouzi/gocron/internal/modules/rpc/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
 )

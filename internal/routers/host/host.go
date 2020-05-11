@@ -6,14 +6,14 @@ import (
 	"strings"
 
 	"github.com/go-macaron/binding"
-	"github.com/ouqiang/gocron/internal/models"
-	"github.com/ouqiang/gocron/internal/modules/logger"
-	"github.com/ouqiang/gocron/internal/modules/rpc/client"
-	"github.com/ouqiang/gocron/internal/modules/rpc/grpcpool"
-	"github.com/ouqiang/gocron/internal/modules/rpc/proto"
-	"github.com/ouqiang/gocron/internal/modules/utils"
-	"github.com/ouqiang/gocron/internal/routers/base"
-	"github.com/ouqiang/gocron/internal/service"
+	"github.com/mayouzi/gocron/internal/models"
+	"github.com/mayouzi/gocron/internal/modules/logger"
+	"github.com/mayouzi/gocron/internal/modules/rpc/client"
+	"github.com/mayouzi/gocron/internal/modules/rpc/grpcpool"
+	"github.com/mayouzi/gocron/internal/modules/rpc/proto"
+	"github.com/mayouzi/gocron/internal/modules/utils"
+	"github.com/mayouzi/gocron/internal/routers/base"
+	"github.com/mayouzi/gocron/internal/service"
 	macaron "gopkg.in/macaron.v1"
 )
 

@@ -1,7 +1,7 @@
 # gocron - 定时任务管理系统
 
 # 项目简介
-使用Go语言开发的轻量级定时任务集中调度和管理系统, 用于替代Linux-crontab [查看文档](https://github.com/ouqiang/gocron/wiki)
+使用Go语言开发的轻量级定时任务集中调度和管理系统, 用于替代Linux-crontab [查看文档](https://github.com/mayouzi/gocron/wiki)
 
 原有的延时任务拆分为独立项目[延迟队列](https://github.com/ouqiang/delay-queue)  
 
@@ -33,9 +33,9 @@
 
 
 ## 下载
-[releases](https://github.com/ouqiang/gocron/releases)  
+[releases](https://github.com/mayouzi/gocron/releases)  
 
-[版本升级](https://github.com/ouqiang/gocron/wiki/版本升级)
+[版本升级](https://github.com/mayouzi/gocron/wiki/版本升级)
 
 ## 安装
 
@@ -54,7 +54,7 @@
 ### 源码安装
 
 - 安装Go 1.11+
-- `go get -d github.com/ouqiang/gocron`
+- `go get -d github.com/mayouzi/gocron`
 - `export GO111MODULE=on` 
 - 编译 `make`
 - 启动
