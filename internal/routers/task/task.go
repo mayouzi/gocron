@@ -168,11 +168,12 @@ func Store(ctx *macaron.Context, form TaskForm) string {
 			return json.CommonFailure("不允许设置当前任务为子任务")
 		}
 	}
-
+	var isAdd = false
 	if id == 0 {
 		// 任务添加后开始调度执行
 		taskModel.Status = models.Running
 		id, err = taskModel.Create()
+		isAdd = true
 	} else {
 		_, err = taskModel.UpdateBean(id)
 	}
@@ -202,7 +203,7 @@ func Store(ctx *macaron.Context, form TaskForm) string {
 
 	logModel := models.OpLog{}
 	logModel.Module = string(models.TaskModule)
-	if id == 0 {
+	if isAdd {
 		logModel.Title = "新增任务"
 	} else {
 		logModel.Title = "修改任务"
