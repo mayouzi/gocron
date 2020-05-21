@@ -84,7 +84,7 @@ func Stop(ctx *macaron.Context) string {
 
 	}
 
-	out, _ := gjson.Marshal(map[string]interface{}{"id": id, "name": taskName})
+	out, _ := gjson.Marshal(map[string]interface{}{"logId": id, "id": taskId, "name": taskName})
 
 	logModel := models.OpLog{}
 	logModel.Module = string(models.TaskModule)
