@@ -7,6 +7,7 @@ import (
 type OpType string
 
 const (
+	LogModule OpType = "log"
 	TaskModule OpType = "task"
 	UserModule OpType = "user"
 	SystemModule OpType = "system"
