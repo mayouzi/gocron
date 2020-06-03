@@ -18,7 +18,7 @@
     * HTTP任务
     > 访问指定的URL地址, 由调度器直接执行, 不依赖任务节点
 * 查看任务执行结果日志
-* 任务执行结果通知, 支持邮件、Slack、Webhook
+* 任务执行结果通知, 支持邮件、Slack、Webhook、钉钉
 
 ### 截图
 ![流程图](https://raw.githubusercontent.com/mayouzi/gocron/master/assets/screenshot/scheduler.png)
@@ -130,7 +130,7 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 * RPC框架 [gRPC](https://github.com/grpc/grpc)
 
 ## 反馈
-提交[issue](https://github.com/ouqiang/gocron/issues/new)
+提交[issue](https://github.com/mayouzi/gocron/issues/new)
 
 ## ChangeLog
 
