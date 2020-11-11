@@ -196,7 +196,7 @@
 <!--          <el-tag type="danger">{{form.runCommand}}</el-tag>-->
 <!--        </el-form-item>-->
         <el-form-item label="执行命令:" label-width="80px">
-          <el-tag size="medium" effect="dark" hit="false" style="font-size: 15px; display: inline-block;">{{form.finalCommand}}</el-tag>
+          <el-tag size="medium" effect="dark" hit="false" style="font-size: 15px; word-break: break-word; white-space: break-spaces; height: auto;">{{form.finalCommand}}</el-tag>
         </el-form-item>
         <el-form-item label="拓展参数:" label-width="80px">
           <el-input v-model.trim="form.runCommandExt" @input.native="changeExtInput" style="width: 90%" placeholder="选填"></el-input>
@@ -356,6 +356,7 @@ export default {
       }
     },
     runTaskShow (item) {
+      this.form.runCommandExt = ''
       this.form.protocol = item.protocol
       this.form.httpMethod = item.http_method
       this.form.taskName = item.name
