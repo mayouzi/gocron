@@ -170,7 +170,7 @@
         <template slot-scope="scope">
           <el-row>
             <el-button type="primary" @click="toEdit(scope.row)">编辑</el-button>
-            <el-button type="success" @click="runTask(scope.row)">手动执行</el-button>
+            <el-button type="success" @click="runTaskShow(scope.row)">手动执行</el-button>
           </el-row>
           <br>
           <el-row>
@@ -180,6 +180,32 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      title=""
+      :visible.sync="dialogVisible"
+      width="40%" >
+      <el-form :model="form">
+        <el-form-item label="任务名称:" label-width="80px">
+          <el-tag type="danger">{{form.taskName}}</el-tag>
+        </el-form-item>
+        <el-form-item label="执行方式:" label-width="80px">
+          <el-tag type="danger">{{form.runMethod}}</el-tag>
+        </el-form-item>
+<!--        <el-form-item label="执行命令:" label-width="80px">-->
+<!--          <el-tag type="danger">{{form.runCommand}}</el-tag>-->
+<!--        </el-form-item>-->
+        <el-form-item label="执行命令:" label-width="80px">
+          <el-tag size="medium" effect="dark" hit="false" style="font-size: 15px; display: inline-block;">{{form.finalCommand}}</el-tag>
+        </el-form-item>
+        <el-form-item label="拓展参数:" label-width="80px">
+          <el-input v-model.trim="form.runCommandExt" @input.native="changeExtInput" style="width: 90%" placeholder="选填"></el-input>
+        </el-form-item>
+        <el-form-item align="center">
+          <el-button type="primary" style="margin-top: 20px;" @click="runTask">运 行</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-main>
 </el-container>
 </template>
@@ -225,7 +251,18 @@ export default {
           label: '停止'
         }
       ],
-      isDeveloper: false
+      isDeveloper: false,
+      dialogVisible: false,
+      form: {
+        taskId: '',
+        taskName: '',
+        runCommand: '',
+        runCommandExt: '',
+        finalCommand: '',
+        protocol: '',
+        httpMethod: '',
+        runMethod: ''
+      }
     }
   },
   components: {taskSidebar},
@@ -301,12 +338,60 @@ export default {
         }
       })
     },
-    runTask (item) {
-      this.$appConfirm(() => {
-        taskService.run(item.id, () => {
-          this.$message.success('任务已开始执行')
-        })
-      }, true)
+    changeExtInput (e) {
+      if (this.form.protocol === 2) {
+        this.form.finalCommand = this.form.runCommand + ' ' + this.form.runCommandExt
+      } else {
+        if (this.form.httpMethod === 1) {
+          this.form.finalCommand = 'CURL ' + this.form.runCommand
+          if (this.form.runCommandExt.length > 0) {
+            this.form.finalCommand += '?' + this.form.runCommandExt
+          }
+        } else {
+          this.form.finalCommand = 'CURL +X ' + this.form.runCommand
+          if (this.form.runCommandExt.length > 0) {
+            this.form.finalCommand += '?' + this.form.runCommandExt
+          }
+        }
+      }
+    },
+    runTaskShow (item) {
+      this.form.protocol = item.protocol
+      this.form.httpMethod = item.http_method
+      this.form.taskName = item.name
+      this.form.runCommand = item.command
+      this.form.taskId = item.id
+      if (item.protocol === 1) {
+        if (item.http_method === 1) {
+          this.form.runMethod = 'HTTP-GET'
+          this.form.finalCommand = 'CURL ' + item.command
+        } else {
+          this.form.runMethod = 'HTTP-POST'
+          this.form.finalCommand = 'CURL +X ' + item.command
+        }
+      } else {
+        this.form.runMethod = 'SHELL'
+        this.form.finalCommand = item.command
+      }
+      this.dialogVisible = true
+    },
+    runTask () {
+      let params = {}
+      if (this.form.runCommandExt.length > 0) {
+        params['ext_params'] = encodeURIComponent(this.form.runCommandExt)
+      }
+      let taskId = this.form.taskId
+      taskService.run(taskId, params, () => {
+        this.dialogVisible = false
+        this.form.taskId = ''
+        this.form.runCommandExt = ''
+        this.form.runCommand = ''
+        this.form.finalCommand = ''
+        this.form.protocol = ''
+        this.form.httpMethod = ''
+        this.form.runMethod = ''
+        this.$message.success('任务已开始执行')
+      })
     },
     remove (item) {
       this.$appConfirm(() => {

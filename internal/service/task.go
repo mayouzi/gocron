@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ouqiang/goutil"
+	"github.com/mayouzi/goutil"
 
 	"github.com/jakecoffman/cron"
 	"github.com/mayouzi/gocron/internal/models"

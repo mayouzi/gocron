@@ -16,12 +16,12 @@ import (
 	"github.com/mayouzi/gocron/internal/modules/setting"
 	"github.com/mayouzi/gocron/internal/routers"
 	"github.com/mayouzi/gocron/internal/service"
-	"github.com/ouqiang/goutil"
+	"github.com/mayouzi/goutil"
 	"github.com/urfave/cli"
 )
 
 var (
-	AppVersion           = "1.6"
+	AppVersion           = "1.6.1"
 	BuildDate, GitCommit string
 )
 

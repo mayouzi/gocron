@@ -12,7 +12,7 @@ import (
 	"github.com/mayouzi/gocron/internal/modules/logger"
 	"github.com/mayouzi/gocron/internal/modules/setting"
 	"github.com/mayouzi/gocron/internal/modules/utils"
-	"github.com/ouqiang/goutil"
+	"github.com/mayouzi/goutil"
 )
 
 var (

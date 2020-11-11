@@ -132,6 +132,10 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 
 ## ChangeLog
 
+v1.6.1
+--------
+* 手动运行支持配置拓展参数，便于补数等操作
+
 v1.6
 --------
 * 支持钉钉消息通知并制定AT的用户

@@ -10,7 +10,7 @@ import (
 	"github.com/mayouzi/gocron/internal/modules/rpc/auth"
 	"github.com/mayouzi/gocron/internal/modules/rpc/server"
 	"github.com/mayouzi/gocron/internal/modules/utils"
-	"github.com/ouqiang/goutil"
+	"github.com/mayouzi/goutil"
 	log "github.com/sirupsen/logrus"
 )
 

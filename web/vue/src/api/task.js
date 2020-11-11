@@ -41,7 +41,7 @@ export default {
     httpClient.post(`/task/disable/${id}`, {}, callback)
   },
 
-  run (id, callback) {
-    httpClient.get(`/task/run/${id}`, {}, callback)
+  run (id, params, callback) {
+    httpClient.get(`/task/run/${id}`, params, callback)
   }
 }

@@ -1,10 +1,12 @@
 package task
 
 import (
+	gjson "encoding/json"
+	"fmt"
+	"github.com/mayouzi/goutil"
+	"net/url"
 	"strconv"
 	"strings"
-	gjson "encoding/json"
-	"github.com/ouqiang/goutil"
 
 	"github.com/go-macaron/binding"
 	"github.com/jakecoffman/cron"
@@ -280,6 +282,7 @@ func Disable(ctx *macaron.Context) string {
 // 手动运行任务
 func Run(ctx *macaron.Context) string {
 	id := ctx.ParamsInt(":id")
+	extParams := ctx.Query("ext_params")
 	json := utils.JsonResponse{}
 	taskModel := new(models.Task)
 	task, err := taskModel.Detail(id)
@@ -288,6 +291,19 @@ func Run(ctx *macaron.Context) string {
 	}
 
 	task.Spec = "手动运行"
+
+	command := task.Command
+
+	if len(extParams) > 0 {
+		if task.Protocol == models.TaskHTTP {
+			command = fmt.Sprintf("%s?%s", task.Command , extParams)
+		} else {
+			extParams, _ = url.QueryUnescape(extParams)
+			command = fmt.Sprintf("%s %s", task.Command , extParams)
+		}
+	}
+	task.Command = command
+
 	service.ServiceTask.Run(task)
 
 	out, _ := gjson.Marshal(map[string]interface{}{"id": id, "name": task.Name})
