@@ -138,6 +138,10 @@ func Register(m *macaron.Macaron) {
 		m.Post("/task/disable/:id", task.Disable)
 	}, apiAuth)
 
+	m.Group("/service", func() {
+		m.Get("/task/status", task.Status)
+	})
+
 	// 404错误
 	m.NotFound(func(ctx *macaron.Context) string {
 		jsonResp := utils.JsonResponse{}
@@ -226,7 +230,7 @@ func userAuth(ctx *macaron.Context) {
 		return
 	}
 	uri := strings.TrimRight(ctx.Req.URL.Path, "/")
-	if strings.HasPrefix(uri, "/v1") {
+	if strings.HasPrefix(uri, "/v1") || strings.HasPrefix(uri, "/service") {
 		return
 	}
 	excludePaths := []string{"", "/user/login", "/install/status"}
@@ -250,7 +254,7 @@ func urlAuth(ctx *macaron.Context) {
 		return
 	}
 	uri := strings.TrimRight(ctx.Req.URL.Path, "/")
-	if strings.HasPrefix(uri, "/v1") {
+	if strings.HasPrefix(uri, "/v1") || strings.HasPrefix(uri, "/service") {
 		return
 	}
 	// 普通用户允许访问的URL地址

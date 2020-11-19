@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-macaron/binding"
 	"github.com/jakecoffman/cron"
@@ -277,6 +278,28 @@ func Enable(ctx *macaron.Context) string {
 // 暂停任务
 func Disable(ctx *macaron.Context) string {
 	return changeStatus(ctx, models.Disabled)
+}
+
+// 查询任务执行状态
+func Status(ctx *macaron.Context) string {
+	taskId := ctx.QueryInt("id")
+	dt := ctx.Query("dt")
+
+	taskModel := new(models.Task)
+	task, dErr := taskModel.Detail(taskId)
+	if dErr != nil || task.Id <= 0 {
+		return "-1"
+	}
+
+	if len(dt) == 0 {
+		dt = time.Now().Format("2006-01-02")
+		taskLogModel := new(models.TaskLog)
+		taskLog, err := taskLogModel.Detail(taskId, dt)
+		if err == nil && taskLog.Id > 0 {
+			return fmt.Sprintf("%d", int(taskLog.Status))
+		}
+	}
+	return "2"
 }
 
 // 手动运行任务

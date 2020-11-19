@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-xorm/xorm"
@@ -34,6 +35,18 @@ func (taskLog *TaskLog) Create() (insertId int64, err error) {
 	}
 
 	return
+}
+
+// 详情
+func (taskLog *TaskLog) Detail(id int, dt string) (TaskLog, error) {
+	t := TaskLog{}
+	startTimeStr := fmt.Sprintf("%s %s", dt, "00:00:00")
+	endTimeStr := fmt.Sprintf("%s %s", dt, "23:59:59")
+	status := 2
+
+	_, err := Db.Where("task_id=? AND start_time>=? AND end_time<=? AND status=?",
+		id, startTimeStr, endTimeStr, status).OrderBy("start_time DESC").Get(&t)
+	return t, err
 }
 
 // 更新
