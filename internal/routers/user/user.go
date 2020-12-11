@@ -313,14 +313,20 @@ func IsDeveloper(ctx *macaron.Context) bool {
 
 // 生成jwt
 func generateToken(user *models.User) (string, error) {
+	expiration := tokenDuration
+	if app.Setting.User.Expiration != 0 {
+		expiration = time.Duration(app.Setting.User.Expiration) * time.Hour
+	}
+
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(tokenDuration).Unix()
+	claims["exp"] = time.Now().Add(expiration).Unix()
 	claims["uid"] = user.Id
 	claims["iat"] = time.Now().Unix()
 	claims["issuer"] = "gocron"
 	claims["username"] = user.Name
 	claims["is_admin"] = user.IsAdmin
+
 	token.Claims = claims
 
 	return token.SignedString([]byte(app.Setting.AuthSecret))

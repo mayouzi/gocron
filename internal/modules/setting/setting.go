@@ -36,6 +36,10 @@ type Setting struct {
 
 	ConcurrencyQueue int
 	AuthSecret       string
+
+	User struct {
+		Expiration int
+	}
 }
 
 // 读取配置
@@ -74,6 +78,8 @@ func Read(filename string) (*Setting, error) {
 	s.CAFile = section.Key("ca_file").MustString("")
 	s.CertFile = section.Key("cert_file").MustString("")
 	s.KeyFile = section.Key("key_file").MustString("")
+
+	s.User.Expiration = section.Key("user.expiration").MustInt(4)
 
 	if s.EnableTLS {
 		if !utils.FileExist(s.CAFile) {
