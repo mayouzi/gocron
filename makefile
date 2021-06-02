@@ -45,6 +45,9 @@ package: build-vue statik
 package-all: build-vue statik
 	bash ./package.sh -p 'linux darwin windows'
 
+package-unix: build-vue statik
+	bash ./package.sh -p 'linux darwin'
+
 .PHONY: build-vue
 build-vue:
 	cd web/vue && yarn run build

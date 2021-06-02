@@ -33,7 +33,7 @@ DEFAULT_ARCH=${GOHOSTARCH}
 # 支持的系统
 SUPPORT_OS=(linux darwin windows)
 # 支持的架构
-SUPPORT_ARCH=(386 amd64)
+SUPPORT_ARCH=(386 amd64 arm64)
  
 # 编译参数
 LDFLAGS=''
@@ -125,6 +125,9 @@ build() {
     for OS in "${INPUT_OS[@]}";do
         for ARCH in "${INPUT_ARCH[@]}";do
             if [[ "${OS}" = "windows"  ]];then
+                if [[ "$ARCH" = "arm64" ]];then
+                    continue
+                fi
                 FILENAME=${BINARY_NAME}.exe
             else
                 FILENAME=${BINARY_NAME}
@@ -142,6 +145,9 @@ package_binary() {
         for ARCH in "${INPUT_ARCH[@]}";do
         package_file ${BINARY_NAME}-${OS}-${ARCH}
         if [[ "${OS}" = "windows" ]];then
+            if [[ "$ARCH" = "arm64" ]];then
+                continue
+            fi
             zip -rq ../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.zip ${BINARY_NAME}-${OS}-${ARCH}
         else
             tar czf ../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.tar.gz ${BINARY_NAME}-${OS}-${ARCH}
